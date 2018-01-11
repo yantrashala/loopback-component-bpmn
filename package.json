@@ -1,0 +1,31 @@
+{
+  "name": "loopback-component-bpmn",
+  "version": "0.0.1",
+  "description": "Integration of bpmn-engine with loopback",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yantrashala/loopback-component-bpmn.git"
+  },
+  "keywords": [
+    "bpmn",
+    "bpmn.io",
+    "workflow",
+    "workflowjs",
+    "activity",
+    "activityjs"
+  ],
+  "author": "Naveen Meher",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yantrashala/loopback-component-bpmn/issues"
+  },
+  "homepage": "https://github.com/yantrashala/loopback-component-bpmn#readme",
+  "dependencies": {
+    "bpmn-engine": "git+https://github.com/Mennu/bpmn-engine.git",
+    "bpmn-js": "^0.26.3"
+  }
+}
