@@ -1,0 +1,14 @@
+{
+  "name": "WorkflowSignal",
+  "properties": {
+        "signalRef": {
+        "type": "string",
+        "index": true,
+        "required": true
+      },
+      "tokenId": {
+        "type" : "string",
+        "required" : true
+      }
+  }
+}
