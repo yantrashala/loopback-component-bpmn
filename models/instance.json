@@ -1,0 +1,34 @@
+{
+  "name": "Instance",
+  "http": {
+    "path": "instances"
+  },
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "definitionName" : {
+      "type" : "string",
+      "required" : true
+    },
+    "definitionId" : {
+      "type" : "string",
+      "required" : true
+    },
+    "state": {
+      "type" : "object",
+      "required" : true,
+      "default" : {}
+    },
+    "status" : {
+      "type" : "string",
+      "required" : false
+    }
+},
+
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

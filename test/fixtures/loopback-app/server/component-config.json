@@ -1,0 +1,9 @@
+{
+  "loopback-component-explorer": {
+    "mountPath": "/explorer",
+    "generateOperationScopedModels": true
+  },
+  "../../../../index": {
+    "repoPath" : "./test/fixtures/loopback-app/bpmn"
+  }
+}

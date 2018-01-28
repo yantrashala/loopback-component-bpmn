@@ -1,0 +1,29 @@
+{
+  "name": "Definition",
+  "http": {
+    "path": "definitions"
+  },
+  "idInjection": false,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "id": {
+      "type": "string",
+      "generated": false,
+      "id": true
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "xmlData": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
