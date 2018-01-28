@@ -1,0 +1,22 @@
+{
+  "name": "WorkflowActivity",
+  "properties": {
+      "modelName": {
+            "type": "string",
+            "required": true
+        },
+        "modelInstanceId": {
+            "type": "string",
+            "required": true
+        },
+        "processId": {
+            "type": "string",
+            "required": true,
+            "id": true
+        },
+        "operation": {
+            "type": "string",
+            "required": true
+        }
+    }
+}
