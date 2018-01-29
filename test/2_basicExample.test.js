@@ -44,17 +44,17 @@ describe('BasicExample BPMN', () => {
 
     function delayedExecution(cb) {
       request(app)
-      .get('/api/instances/' + instanceID)
-      .then(function (res2) {
-        expect(res2.body.status).to.equal('finished');
-        expect(res2.body.variables.somedata).to.equal('test');
-        cb();
-      })
-      .catch(err => {
-        cb(err);
-      });
-    } 
+        .get('/api/instances/' + instanceID)
+        .then(function (res2) {
+          expect(res2.body.status).to.equal('finished');
+          expect(res2.body.variables.somedata).to.equal('test');
+          cb();
+        })
+        .catch(err => {
+          cb(err);
+        });
+    }
 
-    setTimeout(delayedExecution,10, done);
+    setTimeout(delayedExecution, 10, done);
   });
 });

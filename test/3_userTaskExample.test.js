@@ -8,23 +8,25 @@ const chai = require('chai'),
 
 
 
-describe('BasicExample BPMN', () => {
+describe('userTaskExample BPMN', () => {
 
-  let instanceID;
+  var instanceID;
 
   it('should execute userTaskExample bpm', function () {
     return request(app)
       .post('/api/definitions/userTaskExample/execute')
       .then(function (res) {
         instanceID = res.body.id;
+        console.log('instanceID', instanceID);
         expect(res.status).to.equal(200);
       });
   });
 
-  it('should finish basicExample bpm', function () {
+  it('should finish userTaskExample bpm', function () {
     return request(app)
       .get('/api/instances/' + instanceID)
       .then(function (res2) {
+        console.log('res2.body.status', res2.body);
         expect(res2.body.status).to.equal('running');
       });
   });
