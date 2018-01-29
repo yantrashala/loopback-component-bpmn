@@ -14,7 +14,7 @@ describe('BasicExample BPMN', () => {
 
   it('should execute basicExample bpm', function () {
     return request(app)
-      .post('/api/definitions/basicExample/execute')
+      .post('/api/instances/execute?id=basicExample')
       .then(function (res) {
         instanceID = res.body.id;
         expect(res.status).to.equal(200);
@@ -31,7 +31,7 @@ describe('BasicExample BPMN', () => {
 
   it('should execute basicExample bpm with variables', function () {
     return request(app)
-      .post('/api/definitions/basicExample/execute')
+      .post('/api/instances/execute?id=basicExample')
       .set('Content-Type', 'application/json')
       .send('{"somedata":"test"}')
       .then(function (res) {
@@ -44,17 +44,17 @@ describe('BasicExample BPMN', () => {
 
     function delayedExecution(cb) {
       request(app)
-      .get('/api/instances/' + instanceID)
-      .then(function (res2) {
-        expect(res2.body.status).to.equal('finished');
-        expect(res2.body.variables.somedata).to.equal('test');
-        cb();
-      })
-      .catch(err => {
-        cb(err);
-      });
-    } 
+        .get('/api/instances/' + instanceID)
+        .then(function (res2) {
+          expect(res2.body.status).to.equal('finished');
+          expect(res2.body.variables.somedata).to.equal('test');
+          cb();
+        })
+        .catch(err => {
+          cb(err);
+        });
+    }
 
-    setTimeout(delayedExecution,10, done);
+    setTimeout(delayedExecution, 10, done);
   });
 });

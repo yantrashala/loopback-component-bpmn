@@ -14,7 +14,7 @@ describe('BasicExample BPMN', () => {
 
   it('should execute userTaskExample bpm', function () {
     return request(app)
-      .post('/api/definitions/userTaskExample/execute')
+      .post('/api/instances/execute?id=userTaskExample')
       .then(function (res) {
         instanceID = res.body.id;
         expect(res.status).to.equal(200);
