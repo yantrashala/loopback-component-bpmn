@@ -23,24 +23,24 @@ const listener = new EventEmitter();
 
 let state;
 listener.on('start', (task, instance) => {
-  console.log(`${task.type} <${task.id}> of ${instance.id} is start`);
+  console.log(`${task.type} <${task.id}> of is start`);
 });
 listener.on('leave', (task, instance) => {
-  console.log(`${task.type} <${task.id}> of ${instance.id} is leave`);
+  console.log(`${task.type} <${task.id}> of  is leave`);
 });
 listener.on('enter', (task) => {
-  console.log(`${task.type} <${task.id}> of ${instance.id} is enter`);
+  console.log(`${task.type} <${task.id}> is enter`);
 });
 listener.on('cancel', (task, instance) => {
-  console.log(`${task.type} <${task.id}> of ${instance.id} is cancel`);
+  console.log(`${task.type} <${task.id}>  is cancel`);
 });
 listener.on('end', (task, instance) => {
   console.log(`${task.type} <${task.id}> of  is end`);
 });
 listener.once('wait', (task, instance) => {
-  console.log(`${task.type} <${task.id}> of ${instance.id} is wait`);
+  console.log(`${task.type} <${task.id}> of is wait`);
   state = JSON.stringify(engine.getState());
-  //engine.stop();
+  engine.stop();
 });
 
 engine.on('end', (err, definition) => {
@@ -58,7 +58,7 @@ engine.execute({
 
 let engine2;
 setTimeout(function () {
-  //console.log('state', state);
+  console.log('##########resuming engine');
   engine2 = Bpmn.Engine.resume(JSON.parse(state), {
     variables: {
       executionId: 'some-random-id',
@@ -72,5 +72,6 @@ setTimeout(function () {
 }, 2000);
 
 setTimeout(function () {
+  console.log('##########signaling engine');
   engine2.signal('userTask22', 'custom message');
 }, 5000);
