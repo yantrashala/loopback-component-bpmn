@@ -8,22 +8,26 @@ module.exports = function (Instance) {
     let xmlData;
     return Definition.findOne({ where: { id: definitionId } })
       .then((definition) => {
-        if (!definition) cb('Invalid Definition Id')
-        xmlData = definition.xmlData;
-        return Instance.create({
-          definitionName: definition.name,
-          definitionId: definition.id,
-          variables: data,
-          status: 'starting'
-        });
+        if (!definition) {
+          let error = new Error('Invalid Definition Id');
+          error.code = 'INVALID_DEFINITION';
+          error.statusCode = 402;
+          return cb(error);
+        } else {
+          xmlData = definition.xmlData;
+          return Instance.create({
+            definitionName: definition.name,
+            definitionId: definition.id,
+            variables: data,
+            status: 'starting'
+          });
+        }
       })
       .then((instance) => {
-        const engine = engineFactory.newEngine({
-          source: xmlData,
-          name: instance.id
-        });
 
-        engineFactory.execute(engine, {
+        engineFactory.execute({
+          source: xmlData,
+          name: instance.id,
           variables: data
         });
 

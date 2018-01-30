@@ -8,7 +8,8 @@
     "test:all": "cross-env mocha --recursive \"./test/*.test.js\" --timeout 60000",
     "mocha:istanbul": "nyc --reporter=lcov npm run test:all && nyc report --report=lcov > coverage.lcov",
     "posttest2": "npm run lint && nsp check",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "try": "DEBUG=loopback-component-bpmn node test/fixtures/loopback-app/"
   },
   "repository": {
     "type": "git",
@@ -27,8 +28,10 @@
   "homepage": "https://github.com/yantrashala/loopback-component-bpmn#readme",
   "dependencies": {
     "bpmn-engine": "5.0.0-rc2",
+    "bpmn-engine-extensions": "^1.1.0",
     "camunda-bpmn-moddle": "^0.13.0",
-    "loopback-models-tasks": "../loopback-models-tasks"
+    "debug": "^3.1.0",
+    "loopback-models-tasks": "^0.1.2"
   },
   "devDependencies": {
     "chai": "^4.1.2",

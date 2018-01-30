@@ -8,25 +8,29 @@
     "validateUpsert": true
   },
   "properties": {
-    "definitionName" : {
-      "type" : "string",
-      "required" : true
+    "definitionName": {
+      "type": "string",
+      "required": true
     },
-    "definitionId" : {
-      "type" : "string",
-      "required" : true
+    "definitionId": {
+      "type": "string",
+      "required": true
     },
     "state": {
-      "type" : "object",
-      "required" : true,
-      "default" : {}
+      "type": "object",
+      "required": true,
+      "default": {}
     },
-    "status" : {
-      "type" : "string",
-      "required" : false
+    "status": {
+      "type": "string",
+      "required": false,
+      "default": "starting"
+    },
+    "errorData": {
+      "type": "object",
+      "required": false
     }
-},
-
+  },
   "validations": [],
   "relations": {},
   "acls": [],

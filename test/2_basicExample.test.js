@@ -6,9 +6,14 @@ const chai = require('chai'),
   expect = chai.expect,
   should = chai.should();
 
-
-
 describe('BasicExample BPMN', () => {
+
+  before(function (done) {
+    if (!app.booting)
+      done();
+    else
+      app.on('BPMN_LOADED', done);
+  });
 
   let instanceID;
 
