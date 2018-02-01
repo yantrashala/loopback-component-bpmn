@@ -1,6 +1,20 @@
 'use strict';
 
+const methodNames = [
+  "replaceOrCreate", "patchOrCreate",
+  "destroyById", "create",
+  "exists", "replaceById", "prototype.patchAttributes",
+  "createChangeStream", "replaceById", "upsertWithWhere",
+  "updateAll"
+];
+
 module.exports = function (Instance) {
+
+  methodNames.forEach(function (name) {
+    Instance.disableRemoteMethodByName(name);
+  });
+
+
   Instance.execute = function (definitionId, data, options, cb) {
     const Definition = Instance.app.models.Definition;
     const engineFactory = Instance.app.engineFactory;

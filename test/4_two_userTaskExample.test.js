@@ -6,10 +6,10 @@ const chai = require('chai'),
   expect = chai.expect,
   should = chai.should();
 
-describe('userTaskExample BPMN', () => {
+describe('two_UserTaskExample BPMN', () => {
 
   var instanceID;
-  var taskID;
+  var task1ID, task2ID;
 
   before(function (done) {
     if (!app.booting)
@@ -21,7 +21,7 @@ describe('userTaskExample BPMN', () => {
 
   it('should execute userTaskExample bpm', function () {
     return request(app)
-      .post('/api/instances/execute?id=UserTaskExample2')
+      .post('/api/instances/execute?id=two_UserTaskExample')
       .then(function (res) {
         instanceID = res.body.id;
         //console.log('instanceID', instanceID);
@@ -39,7 +39,46 @@ describe('userTaskExample BPMN', () => {
   });
 
   it('should have a new task created', function () {
-    let filter = { where: { formDef: { instanceID: instanceID } } };
+    let filter = {
+      where: {
+        formDef: { instanceID: instanceID },
+        status: 0
+      }
+    };
+    return request(app)
+      .get('/api/tasks?filter=' + JSON.stringify(filter))
+      .then(function (res2) {
+
+        expect(res2.body).to.be.an('array');
+        expect(res2.body.length).to.equal(1);
+        taskID = res2.body[0].id;
+      });
+  });
+
+  it('should complete pending user task', function () {
+    return request(app)
+      .put('/api/tasks/' + taskID + '/complete')
+      .then(function (res) {
+        expect(res.status).to.equal(204);
+      });
+  });
+
+  it('should have the task marked as complete', function () {
+    return request(app)
+      .get('/api/tasks/' + taskID)
+      .then(function (res) {
+        expect(res.status).to.equal(200)
+        expect(res.body.status).to.equal(2);
+      });
+  });
+
+  it('should have a new task created', function () {
+    let filter = {
+      where: {
+        formDef: { instanceID: instanceID },
+        status: 0
+      }
+    };
     return request(app)
       .get('/api/tasks?filter=' + JSON.stringify(filter))
       .then(function (res2) {
