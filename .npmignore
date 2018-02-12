@@ -1,0 +1,6 @@
+test
+coverage
+.nyc_output
+coverage.lcov
+..eslintigonore
+.eslintrc
