@@ -27,10 +27,6 @@
     "dataSource": "db",
     "public": true
   },
-  "Filter": {
-    "dataSource": "db",
-    "public": true
-  },
   "User": {
     "dataSource": "db",
     "public": false

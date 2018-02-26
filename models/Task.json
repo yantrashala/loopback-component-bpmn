@@ -1,0 +1,56 @@
+{
+  "name": "Task",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "string",
+      "required": false
+    },
+    "assignedTo" : {
+      "type": "string",
+      "required": true
+    },
+    "dueDate" : {
+      "type": "DateString",
+      "required": false
+    },
+    "priority" : {
+      "type": "string",
+      "required": false
+    },
+    "category": {
+      "type": "string",
+      "required": false
+    },
+    "formDef": {
+      "type": "object",
+      "required": false
+    },
+    "formValue": {
+      "type": "object",
+      "required": false
+    },
+    "referenceID": {
+      "type": "any",
+      "required": false,
+      "description": "Reference ID of associated process/workflow"
+    },
+    "status": {
+      "type": "number",
+      "required": true,
+      "description" : "0-not started, 1-claimed (group task only), 2-completed",
+      "default": 0
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
