@@ -13,7 +13,6 @@ module.exports = function (Task) {
   });
 
   Task.prototype.complete = function (data, options, cb) {
-    console.log('DATA', data , 'options', options);
     return this.updateAttributes({ status: 2 }).then((result) => {
       Task.emit('complete', this);
       return;
