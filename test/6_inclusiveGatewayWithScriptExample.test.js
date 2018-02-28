@@ -37,7 +37,9 @@ it(' Inclusive Gateway  with script should finish engine execution with Path 1',
       .then(function (res2) {
           expect(res2.body.status).to.equal('finished');
           expect(res2.body.state.variables.taskInput.Task_add_A_to_email_list.result).to.equal('Add A');
-          
+          should.not.exist(res2.body.state.variables.taskInput.Task_add_B_to_email_list);
+          should.not.exist(res2.body.state.variables.taskInput.Task_send_voucher);
+
         cb();
       })
       .catch(err => {
@@ -69,6 +71,7 @@ it(' Inclusive Gateway  with script should finish engine execution with Path 2 a
           expect(res2.body.status).to.equal('finished');
           expect(res2.body.state.variables.taskInput.Task_add_B_to_email_list.result).to.equal('Add B');
           expect(res2.body.state.variables.taskInput.Task_send_voucher.result).to.equal('Send Voucher');
+          should.not.exist(res2.body.state.variables.taskInput.Task_add_A_to_email_list);
 
         cb();
       })
@@ -102,7 +105,9 @@ it(' Inclusive Gateway  with script should finish engine execution with Path 1',
       .then(function (res2) {
           expect(res2.body.status).to.equal('finished');
           expect(res2.body.state.variables.taskInput.Task_send_voucher.result).to.equal('Send Voucher');
-          
+          should.not.exist(res2.body.state.variables.taskInput.Task_add_A_to_email_list);
+          should.not.exist(res2.body.state.variables.taskInput.Task_add_B_to_email_list);
+
         cb();
       })
       .catch(err => {
