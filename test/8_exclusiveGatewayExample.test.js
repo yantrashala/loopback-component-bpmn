@@ -47,7 +47,7 @@ describe('Exclusive gateway example BPMN', () => {
         });
     }
 
-    setTimeout(delayedExecution, 1, done);
+    setTimeout(delayedExecution, 10, done);
   });
 
   it('should execute Exclusive gateway bpm with rice as input', function () {
@@ -80,7 +80,7 @@ describe('Exclusive gateway example BPMN', () => {
         });
     }
 
-    setTimeout(delayedExecution, 1, done);
+    setTimeout(delayedExecution, 10, done);
   });
 
   it('should execute Exclusive gateway bpm with salad as input', function () {
@@ -112,6 +112,6 @@ describe('Exclusive gateway example BPMN', () => {
         });
     }
 
-    setTimeout(delayedExecution, 1, done);
+    setTimeout(delayedExecution, 10, done);
   });
 });

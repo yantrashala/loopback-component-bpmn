@@ -47,7 +47,7 @@ it(' Inclusive Gateway  with script should finish engine execution with Path 1',
       });
   }
 
-  setTimeout(delayedExecution, 1, done);
+  setTimeout(delayedExecution, 10, done);
 });
 
 it('should execute Inclusive Gateway  with script Example bpm with data as B', function () {
@@ -80,7 +80,7 @@ it(' Inclusive Gateway  with script should finish engine execution with Path 2 a
       });
   }
 
-   setTimeout(delayedExecution, 1, done);
+   setTimeout(delayedExecution, 10, done);
   });
 
   
@@ -115,7 +115,7 @@ it(' Inclusive Gateway  with script should finish engine execution with Path 1',
       });
   }
 
-  setTimeout(delayedExecution, 1, done);
+  setTimeout(delayedExecution, 10, done);
 });
 
 });

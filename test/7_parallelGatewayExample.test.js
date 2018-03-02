@@ -27,15 +27,26 @@ describe('Parallel Gateway Example BPMN', () => {
       });
   });
 
-  it('should finish  Parallel Gateway example bpm with all parallel flows', function () {
-    return request(app)
-      .get('/api/instances/' + instanceID)
-      .then(function (res2) {
-        expect(res2.body.status).to.equal('finished');
-        expect(res2.body.state.variables.taskInput.Task_EatPizza.result).to.equal('pizza');
-        expect(res2.body.state.variables.taskInput.Task_EatPasta.result).to.equal('pasta');
-        expect(res2.body.state.variables.taskInput.Task_HaveDrink.result).to.equal('drink');
+  it('should finish  Parallel Gateway example bpm with all parallel flows', function (done) {
+    function delayedExecution(cb) {
+      return request(app)
+        .get('/api/instances/' + instanceID)
+        .then(function (res2) {
+          expect(res2.body.status).to.equal('finished');
+          expect(res2.body.state.variables.taskInput.Task_EatPizza.result).to.equal('pizza');
+          expect(res2.body.state.variables.taskInput.Task_EatPasta.result).to.equal('pasta');
+          expect(res2.body.state.variables.taskInput.Task_HaveDrink.result).to.equal('drink');
+
+          cb();
+   
+      })
+      .catch(err => {
+        cb(err);
       });
+  }
+
+  setTimeout(delayedExecution, 1000, done);
+
   });
 
 });
