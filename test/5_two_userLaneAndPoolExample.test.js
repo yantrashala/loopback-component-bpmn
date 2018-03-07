@@ -19,12 +19,11 @@ describe('two_userLaneAndPoolExample BPMN', () => {
   });
 
 
-  it('should execute userTaskExample bpm', function () {
+  it('should execute two_userLaneAndPoolExample bpm', function () {
     return request(app)
       .post('/api/instances/execute?id=poolAndLane')
       .then(function (res) {
         instanceID = res.body.id;
-        console.log('instanceID....', instanceID);
         expect(res.status).to.equal(200);
       });
   });
@@ -33,7 +32,6 @@ describe('two_userLaneAndPoolExample BPMN', () => {
     return request(app)
       .get('/api/instances/' + instanceID)
       .then(function (res2) {
-        //console.log('res2.body.status', res2.body);
         expect(res2.body.status).to.equal('pending');
       });
   });
@@ -49,15 +47,13 @@ describe('two_userLaneAndPoolExample BPMN', () => {
       .get('/api/tasks?filter=' + JSON.stringify(filter))
       .then(function (res2) {
         taskID = res2.body[res2.body.length-1].id;
-        console.log('TASK id 1###',taskID);
-
+       
         expect(res2.body).to.be.an('array');
-        //expect(res2.body.length).to.equal(1);
+        expect(res2.body.length).to.equal(1);
       });
   });
 
   it('should complete pending user task', function () {
-    console.log('TASK id 2###',taskID);
     return request(app)
       .put('/api/tasks/' + taskID + '/complete')
       .then(function (res) {
@@ -86,7 +82,7 @@ describe('two_userLaneAndPoolExample BPMN', () => {
       .then(function (res2) {
         taskID = res2.body[res2.body.length-1].id;
         expect(res2.body).to.be.an('array');
-        //expect(res2.body.length).to.equal(1);
+        expect(res2.body.length).to.equal(1);
         
       });
   });

@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="exclusive_gateway" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="1.11.3">
+  <bpmn:process id="Process_1" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1" name="hunger noticed">
+      <bpmn:outgoing>SequenceFlow_1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_2" sourceRef="choose_recipie" targetRef="ExclusiveGateway_choose_recipie" />
+    <bpmn:task id="Task_5" name="eat meal">
+      <bpmn:incoming>SequenceFlow_6</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_7</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="EndEvent_01v8rt2" name="hunger satisfied">
+      <bpmn:incoming>SequenceFlow_7</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_7" sourceRef="Task_5" targetRef="EndEvent_01v8rt2" />
+    <bpmn:exclusiveGateway id="ExclusiveGateway_choose_recipie">
+      <bpmn:incoming>SequenceFlow_2</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_salad</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_rice</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_pasta</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="SequenceFlow_rice" sourceRef="ExclusiveGateway_choose_recipie" targetRef="Task_Prepare_Rice">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression" language="JavaScript"><![CDATA[this.variables.recipie == "rice";]]></bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_pasta" sourceRef="ExclusiveGateway_choose_recipie" targetRef="Task_Prepare_Pasta">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression" language="JavaScript"><![CDATA[this.variables.recipie == 'pasta';]]></bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_salad" sourceRef="ExclusiveGateway_choose_recipie" targetRef="Task_Prepare_Salad">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression" language="JavaScript"><![CDATA[this.variables.recipie == "salad"]]></bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_3" sourceRef="Task_Prepare_Salad" targetRef="ExclusiveGateway_combine" />
+    <bpmn:sequenceFlow id="SequenceFlow_4" sourceRef="Task_Prepare_Rice" targetRef="ExclusiveGateway_combine" />
+    <bpmn:sequenceFlow id="SequenceFlow_5" sourceRef="Task_Prepare_Pasta" targetRef="ExclusiveGateway_combine" />
+    <bpmn:sequenceFlow id="SequenceFlow_6" sourceRef="ExclusiveGateway_combine" targetRef="Task_5" />
+    <bpmn:sequenceFlow id="SequenceFlow_1" sourceRef="StartEvent_1" targetRef="choose_recipie" />
+    <bpmn:parallelGateway id="ExclusiveGateway_combine">
+      <bpmn:incoming>SequenceFlow_5</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_4</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_3</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_6</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:task id="choose_recipie" name="recipie chosen">
+      <bpmn:incoming>SequenceFlow_1</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_2</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:scriptTask id="Task_Prepare_Pasta" name="cook pasta" scriptFormat="JavaScript">
+      <bpmn:incoming>SequenceFlow_pasta</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_5</bpmn:outgoing>
+      <bpmn:script><![CDATA[next(null, {"result" : "pasta prepared"} );]]></bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:scriptTask id="Task_Prepare_Rice" name="cook rice" scriptFormat="JavaScript">
+      <bpmn:incoming>SequenceFlow_rice</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_4</bpmn:outgoing>
+      <bpmn:script><![CDATA[next(null, {"result" : "rice prepared"} );]]></bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:scriptTask id="Task_Prepare_Salad" name="prepare salad" scriptFormat="JavaScript">
+      <bpmn:incoming>SequenceFlow_salad</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_3</bpmn:outgoing>
+      <bpmn:script><![CDATA[next(null, {"result" : "salad prepared"} );]]></bpmn:script>
+    </bpmn:scriptTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="158" y="113" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="140" y="149" width="72" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_07f37aq_di" bpmnElement="SequenceFlow_2">
+        <di:waypoint xsi:type="dc:Point" x="368" y="131" />
+        <di:waypoint xsi:type="dc:Point" x="441" y="131" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="359.5" y="110" width="90" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Task_053aopq_di" bpmnElement="Task_5">
+        <dc:Bounds x="853" y="91" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_01v8rt2_di" bpmnElement="EndEvent_01v8rt2">
+        <dc:Bounds x="990" y="113" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="970" y="153" width="77" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_019prbr_di" bpmnElement="SequenceFlow_7">
+        <di:waypoint xsi:type="dc:Point" x="953" y="131" />
+        <di:waypoint xsi:type="dc:Point" x="990" y="131" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="971.5" y="110" width="0" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ExclusiveGateway_1v5tokw_di" bpmnElement="ExclusiveGateway_choose_recipie" isMarkerVisible="true">
+        <dc:Bounds x="441" y="106" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="466" y="160" width="0" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0rh2xmh_di" bpmnElement="SequenceFlow_salad">
+        <di:waypoint xsi:type="dc:Point" x="466" y="156" />
+        <di:waypoint xsi:type="dc:Point" x="466" y="371" />
+        <di:waypoint xsi:type="dc:Point" x="582" y="371" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="436" y="257.5" width="90" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_04uluhn_di" bpmnElement="SequenceFlow_rice">
+        <di:waypoint xsi:type="dc:Point" x="466" y="156" />
+        <di:waypoint xsi:type="dc:Point" x="466" y="248" />
+        <di:waypoint xsi:type="dc:Point" x="582" y="248" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="436" y="196" width="90" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0zqxzfi_di" bpmnElement="SequenceFlow_pasta">
+        <di:waypoint xsi:type="dc:Point" x="491" y="131" />
+        <di:waypoint xsi:type="dc:Point" x="582" y="131" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="491.5" y="110" width="90" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1op6cn8_di" bpmnElement="SequenceFlow_3">
+        <di:waypoint xsi:type="dc:Point" x="682" y="371" />
+        <di:waypoint xsi:type="dc:Point" x="788" y="371" />
+        <di:waypoint xsi:type="dc:Point" x="788" y="156" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="690" y="350" width="90" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1uscozx_di" bpmnElement="SequenceFlow_4">
+        <di:waypoint xsi:type="dc:Point" x="682" y="248" />
+        <di:waypoint xsi:type="dc:Point" x="788" y="248" />
+        <di:waypoint xsi:type="dc:Point" x="788" y="156" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="690" y="227" width="90" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_01yg5ls_di" bpmnElement="SequenceFlow_5">
+        <di:waypoint xsi:type="dc:Point" x="682" y="131" />
+        <di:waypoint xsi:type="dc:Point" x="723" y="131" />
+        <di:waypoint xsi:type="dc:Point" x="723" y="131" />
+        <di:waypoint xsi:type="dc:Point" x="763" y="131" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="693" y="125" width="90" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0x5u8sa_di" bpmnElement="SequenceFlow_6">
+        <di:waypoint xsi:type="dc:Point" x="813" y="131" />
+        <di:waypoint xsi:type="dc:Point" x="853" y="131" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="788" y="110" width="90" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1nof81a_di" bpmnElement="SequenceFlow_1">
+        <di:waypoint xsi:type="dc:Point" x="194" y="131" />
+        <di:waypoint xsi:type="dc:Point" x="239" y="131" />
+        <di:waypoint xsi:type="dc:Point" x="239" y="131" />
+        <di:waypoint xsi:type="dc:Point" x="268" y="131" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="209" y="125" width="90" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ParallelGateway_13agrjn_di" bpmnElement="ExclusiveGateway_combine">
+        <dc:Bounds x="763" y="106" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="743" y="160" width="0" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_14bttba_di" bpmnElement="choose_recipie">
+        <dc:Bounds x="268" y="91" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ScriptTask_1sgfpb8_di" bpmnElement="Task_Prepare_Pasta">
+        <dc:Bounds x="582" y="91" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ScriptTask_1gs55dx_di" bpmnElement="Task_Prepare_Rice">
+        <dc:Bounds x="582" y="208" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ScriptTask_0lul5oe_di" bpmnElement="Task_Prepare_Salad">
+        <dc:Bounds x="582" y="331" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
