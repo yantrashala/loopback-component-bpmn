@@ -35,7 +35,8 @@ module.exports = function (app, config) {
 
 function getDefinitionIds(app){
     return new Promise(function(resolve, reject){
-        app.models.Definition.find({ fields : {id:true}}, function(err, result){
+        let Definition = app.loopback.getModelByType('Definition');
+        Definition.find({ fields : {id:true}}, function(err, result){
             if(err){
                 reject(err);
             }
