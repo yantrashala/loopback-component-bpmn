@@ -4,6 +4,7 @@ const path = require('path');
 
 const EngineFactory = require('./lib/enginefactory');
 const bpmnLoader = require('./lib/bpmnLoader');
+const modelExt = require('./lib/model-ext');
 
 module.exports = function (app, config) {
 
@@ -31,6 +32,8 @@ module.exports = function (app, config) {
             });
     });
   }  
+
+  modelExt(app);
 };
 
 function getDefinitionIds(app){
