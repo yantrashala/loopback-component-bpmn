@@ -1,0 +1,160 @@
+<!doctype html>
+<html>
+<head>
+  <title>BPMN</title>
+  <style>
+        body {
+          font-family: 'Tahoma', 'Arial', sans-serif;
+          background-color: rgb(248, 247, 245);
+          overflow-y: scroll;
+        }
+
+        body #header {
+            position: fixed;
+            width: 100%;
+            top: 0px;
+            z-index: 1;
+            height: 34px;
+            padding:  9px 14px 19px;
+            margin: 0px;
+            background-color:blue;
+           
+        }
+
+        #header #logo {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: rgb(255, 255, 255);
+            text-decoration: none;
+        }
+
+        #content {
+            padding-left: 30px;
+            padding-right: 30px;
+            margin-top : 90px;
+        }
+       
+        .subHeading{
+            width:250px; 
+            display: block; 
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 10px;
+            font-size:20px;
+        }
+       
+        .table{
+            width: 50%;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 14px;
+            border: blueviolet;
+        }
+        .row{
+            height: 30px;
+            background: #efefef;
+            margin: 2px;
+            padding-top: 12px;
+            padding-left: 8px;
+            padding-right: 8px;
+            vertical-align: middle;
+        }
+        a {
+            color: blue;
+            text-decoration: underline;
+        }
+
+      </style>
+
+</head>
+<body>
+    <div id="header">
+        <span id="logo">BPMN Viewer</span>
+        <br>
+        <span style="font-size:11px;color: white;">Powered by bpmn.io</span>
+    </div>
+    <div id="content">
+        <div id="list">
+            <div class="subHeading">
+                BPMN Definitions
+            </div>
+            <div class="table">
+                    <% for(var i=0; i<data.length; i++) { %>
+                            <div class="row">
+                                <span style="vertical-align: center"><%= data[i].id %></span>
+                                <a style="float: right;" href='#' onclick="showDiagram('<%=data[i].id %>');">
+                                    View
+                                </a>
+                            </div>
+                    <% } %>
+            </div>
+        </div>
+    
+        <div id="diagram">
+            <span id="diagramName"></span>
+            <button onclick="showList();" style="float:right;">Back</button>
+            <div class="canvas">
+                    <div id="js-canvas"></div>
+            </div>
+        </div>
+    </div>
+
+<!-- viewer -->
+<script src="https://unpkg.com/bpmn-js@0.27.5/dist/bpmn-viewer.development.js"></script>
+
+<!-- jquery  -->
+<script src="https://unpkg.com/jquery@3.3.1/dist/jquery.js"></script>
+
+<script>
+   
+    function showDiagramName(id){
+        $("#diagramName").text(id);
+    }
+
+    function showDiagram(id){
+        $("#diagram").show();
+        $("#list").hide();
+
+        showDiagramName(id);
+
+        var url = '/api/definitions?filter={"fields":{"xmlData":true}, "where":{"id":"' + id + '"}}';
+        $.ajax({url: url, type: 'GET',
+            success: function(result){
+                var xml = result[0].xmlData;
+                
+                var viewer = new BpmnJS({
+                    container: $('#js-canvas'),
+                    height: 600
+                });
+
+                viewer.importXML(xml, function(err) {
+                    if (err) {
+                        console.log('error: ' + err.message);
+                        console.error(err);
+                    } else {
+                        viewer.get('canvas').zoom('fit-viewport');
+                        console.log('success');
+                    }
+                });
+            },
+            error: function() {
+                $('#diagram').html('<p>An error has occurred while fetching BPMN definition</p>');
+            }
+        });
+    }
+
+    function showList(){
+        $("#diagram").hide();
+        $("#list").show();
+
+        // clear diagram
+        $('#js-canvas').html('');
+    }
+
+    // hide diagram when the page is loaded.
+    showList();
+   
+</script>
+</body>
+</html>

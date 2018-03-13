@@ -4,6 +4,7 @@
     "generateOperationScopedModels": true
   },
   "../../../../index": {
-    "repoPath" : "./test/fixtures/loopback-app/bpmn"
-  }
+    "repoPath" : "./test/fixtures/loopback-app/bpmn",
+    "mountPath": "/viewer"
+  } 
 }

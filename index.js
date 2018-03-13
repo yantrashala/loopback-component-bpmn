@@ -18,6 +18,31 @@ module.exports = function (app, config) {
   app.engineFactory = EngineFactory;
 
 
-  // Adding BPMN Viewer routes
-  // TODO: adding reactjs page
+  // Add BPMN Viewer routes
+  if(config.mountPath){
+    app.use(config.mountPath, function(req, res, next) {
+        getDefinitionIds(app)
+            .then((definitions)=>{                        
+                var data = definitions || {};             
+                var render = app.loopback.template(__dirname + '/component/viewer.ejs');
+                var html = render({data:data});
+              
+                res.status(200).send(html);
+            });
+    });
+  }  
 };
+
+function getDefinitionIds(app){
+    return new Promise(function(resolve, reject){
+        let Definition = app.loopback.getModelByType('Definition');
+        Definition.find({ fields : {id:true}}, function(err, result){
+            if(err){
+                reject(err);
+            }
+            else {
+                resolve(result);
+            }
+        });
+    })  
+  }
